@@ -1,0 +1,294 @@
+<title>HoneyB Портфолио</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;700&display=swap">
+<style>
+/* Layout: тёмная витрина студии. Крупная надпись, два раздела (видео и оформление ВК), фильтр, сетка карточек; карточка открывает просмотрщик поверх страницы. */
+:root{
+  --bg:#0c0c0b; --panel:#171714; --line:#2a2924; --fg:#f2efe6; --muted:#9a968a;
+  --honey:#ffd21f; --ink:#0c0c0b;
+  --display:"Russo One","Arial Black",Impact,sans-serif;
+  --body:"Rubik",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--honey);outline-offset:3px}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;border-bottom:1px solid var(--line)}
+.logo{font-family:var(--display);font-size:20px;letter-spacing:.02em}
+.logo b{color:var(--honey);font-weight:400}
+.nav{display:flex;gap:18px;font-size:14px}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover{color:var(--honey)}
+
+.hero{padding-block:56px 32px;display:grid;gap:28px}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--honey)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,9vw,128px);line-height:.92;margin:0;text-transform:uppercase;text-wrap:balance}
+h1 .hl{color:var(--ink);background:var(--honey);padding:0 .12em;display:inline-block;transform:rotate(-1.5deg)}
+.lead{max-width:58ch;color:var(--muted);font-size:18px;margin:0}
+.lead strong{color:var(--fg);font-weight:500}
+
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-block:40px 18px}
+h2.sec{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,56px);line-height:1;margin:0;text-transform:uppercase}
+h2.sec span{color:var(--honey)}
+.sec-note{color:var(--muted);font-size:15px;max-width:44ch;margin:0}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;padding-block:8px 24px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.filters button{font:500 14px var(--body);color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer}
+.filters button:hover{border-color:var(--muted)}
+.filters button[aria-pressed="true"]{background:var(--honey);color:var(--ink);border-color:var(--honey)}
+.filters .n{opacity:.6;margin-left:6px;font-variant-numeric:tabular-nums}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;padding-bottom:56px}
+.grid.vk{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+@media (max-width:420px){.grid.vk{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;gap:12px;text-align:left;background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;min-width:0}
+.card.big{grid-column:span 2}
+@media (max-width:640px){.card.big{grid-column:auto}}
+.thumb{position:relative;aspect-ratio:16/10;max-width:100%;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.vk .thumb{aspect-ratio:3/1.4}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .5s ease;filter:saturate(.9)}
+.ph{position:absolute;inset:0;display:flex;align-items:flex-end;padding:18px;font-family:var(--display);font-size:clamp(26px,3.6vw,44px);line-height:.95;text-transform:uppercase;color:var(--line);
+  background:repeating-linear-gradient(-45deg,transparent 0 22px,rgba(255,210,31,.035) 22px 44px),var(--panel)}
+.play{position:absolute;right:14px;bottom:14px;width:52px;height:52px;border-radius:50%;background:var(--honey);display:grid;place-items:center;transform:scale(.85);opacity:.92;transition:transform .25s ease,opacity .25s}
+.play::before{content:"";border-left:15px solid var(--ink);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.count{position:absolute;left:14px;top:14px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--honey);padding:4px 8px}
+.card:hover .thumb img{transform:scale(1.04);filter:saturate(1.1)}
+.card:hover .play{transform:scale(1);opacity:1}
+.meta{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.card h3{font-family:var(--display);font-weight:400;font-size:21px;line-height:1.1;margin:0;text-transform:uppercase}
+.tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.card p{margin:0;color:var(--muted);font-size:15px;max-width:60ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:12px;border:1px solid var(--line);padding:3px 8px;color:var(--muted)}
+
+.cta{border-top:1px solid var(--line);padding-block:64px 80px;display:grid;gap:20px}
+.cta h2{font-family:var(--display);font-weight:400;font-size:clamp(32px,6vw,72px);line-height:.95;margin:0;text-transform:uppercase;text-wrap:balance}
+.cta h2 span{color:var(--honey)}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{font:700 16px var(--body);background:var(--honey);color:var(--ink);text-decoration:none;padding:16px 26px;border:0;cursor:pointer}
+.btn:hover{filter:brightness(1.07)}
+.handle{font-size:16px;color:var(--muted)}
+.handle b{color:var(--fg);font-weight:500;user-select:all}
+
+dialog{background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:0;width:min(1100px,94vw);max-height:94vh;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.85)}
+.pl-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
+.pl-head h4{font-family:var(--display);font-weight:400;font-size:20px;margin:0;text-transform:uppercase}
+.x{background:none;border:1px solid var(--line);color:var(--fg);width:40px;height:40px;font-size:20px;cursor:pointer;flex:none}
+.x:hover{border-color:var(--honey);color:var(--honey)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px 0}
+.tabs button{font:500 13px var(--body);background:none;border:1px solid var(--line);color:var(--fg);padding:6px 12px;cursor:pointer}
+.tabs button[aria-pressed="true"]{border-color:var(--honey);color:var(--honey)}
+.screen{margin:16px 18px;aspect-ratio:16/9;max-width:100%;background:#000;position:relative}
+.screen.v{aspect-ratio:9/16;height:min(72vh,780px);width:auto;margin-inline:auto}
+.screen.img{aspect-ratio:auto;background:none;display:grid;place-items:center}
+.screen.img img{max-width:100%;max-height:76vh;object-fit:contain;display:block}
+.screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.pl-foot{padding:0 18px 18px;font-size:14px;color:var(--muted)}
+.pl-foot a{color:var(--honey)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo">Honey<b>B</b></div>
+    <nav class="nav"><a href="#video">Видео</a><a href="#vk">Оформление ВК</a><a href="#contact">Связаться</a></nav>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Портфолио студии HoneyB · Владимир</div>
+    <h1>Видео и визуал, которые <span class="hl">продают</span></h1>
+    <p class="lead">Рекламные ролики, клипы, видеологотипы и оформление сообществ ВКонтакте. Идею, генерацию, монтаж и дизайн делаем сами. <strong>Нажмите на работу, чтобы посмотреть.</strong></p>
+  </section>
+
+  <section id="video">
+    <div class="sec-head"><h2 class="sec">Видео<span>.</span></h2><p class="sec-note">AI-видео и монтаж: от 15-секундной рекламы до клипа под трек.</p></div>
+    <nav class="filters" id="filters" aria-label="Тип видео"></nav>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="vk">
+    <div class="sec-head"><h2 class="sec">Оформление ВК<span>.</span></h2><p class="sec-note">Шапка, живая шапка для телефона, аватар, обложки меню. Внутри каждой работы есть запись экрана, как сообщество выглядит в телефоне.</p></div>
+    <div class="grid vk" id="vkgrid"></div>
+  </section>
+
+  <section class="cta" id="contact">
+    <h2>Нужно такое же, <span>только про вас?</span></h2>
+    <p class="lead">Напишите, что продаёте и где будет работать ролик или группа. Предложу идею и честно скажу, сколько это стоит и сколько займёт.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://t.me/yuriy_eremenko" target="_blank" rel="noopener">Написать в Telegram</a>
+      <span class="handle">Telegram: <b>@yuriy_eremenko</b></span>
+    </div>
+  </section>
+</div>
+
+<dialog id="player" aria-labelledby="pl-title">
+  <div class="pl-head"><h4 id="pl-title"></h4><button class="x" id="close" aria-label="Закрыть">×</button></div>
+  <div class="tabs" id="pl-tabs"></div>
+  <div class="screen" id="screen"></div>
+  <div class="pl-foot">Не открывается? <a id="pl-link" href="#" target="_blank" rel="noopener">Открыть отдельно</a></div>
+</dialog>
+
+<script>
+/* id = ID файла в Google Drive. vert:true = вертикальное видео, img:true = картинка. */
+const WORKS = [
+  {t:"Кровосток — «Быть плохим»", c:"clips", big:true, d:"Визуальный проект под трек: около 50 монтажных склеек в едином мрачном стиле.", v:[{id:"1RT833lj31IK7He6BOjK3xm1JQjKfs80r"}]},
+  {t:"Антей", c:"ads", d:"Рекламные ролики для фабрики Антей.", v:[
+    {n:"Ролик 1",id:"15K86ygxRM4h1TA6biXfQFSaKsoxYgB7A"},
+    {n:"Для соцсетей",id:"1gStfak3_cvNSn30yeLm4tU4x0NonO-_l"},
+    {n:"Мебель",id:"1cFrisXo0E2xgQC_jcl8OVrAWW4WFhCUn"},
+    {n:"Кухни, вертикаль",id:"1MFUlTQKvJj_6GgZ8Rcu6ViLrvgTqFh3F",vert:true}]},
+  {t:"Семейная ипотека", c:"ads", d:"Ролик для риелторов про семейную ипотеку.", v:[{id:"12KWfHCeE-3mg4auBMnEloQCyVjv6G-UN"}]},
+  {t:"Анаконда", c:"logo", d:"Видеологотип со змеёй.", v:[{id:"194VZwe4ZmjTcR0MmFLXCD34zcq4XMLTD"}]},
+  {t:"Студия Марии Ковалёвой", c:"ads", d:"Ролик для студии фитнеса и хореографии.", v:[{id:"1XuKqemAiYHKgfNbhJ-d6l-cg7w8EuxAv"}]},
+  {t:"TERRA · Обратный отсчёт", c:"ads", v:[{id:"1-hVJFKkizV7XXDLOQXI_ckbvp03q5_en"}]},
+  {t:"Для риелторов", c:"ads", d:"Ролики для агентств недвижимости.", v:[
+    {n:"Ролик 1",id:"1KdrANlp2pzaZ1vxy_HvU1FaujPdGQ39p"},
+    {n:"Ролик 2",id:"1bHsx-B1ZGf6qIv-Ki-qXhPYrzseSXkGM"}]},
+  {t:"Киношность", c:"film", v:[{id:"12WQfGFjtWu0piiHUHE-RDR0NkzLms78g"}]},
+  {t:"Саймон · 1 серия", c:"film", v:[{id:"1woayuXRo6_7Px9V1I55CWClgGN6qmxq_"}]},
+  {t:"Платье", c:"ads", v:[{id:"1WKWRNSxX1bC6h9UXZNnWsrSD72U5RIFq"}]},
+  {t:"Горячая", c:"ads", v:[{id:"1hVk5AMaaJZIBRZxe8JCv5oJ3qubf6UTk"}]},
+  {t:"Объектив", c:"film", v:[{id:"1fsX4ze_DEApa7XnhW5HXwKiC0QJSe0jd"}]},
+  {t:"World", c:"film", v:[{id:"1FForJWsIU3r7mdGETsOTlBzv-kbD744g"}]},
+  {t:"Япония", c:"film", v:[{id:"1WUR31a7lcOzYhrfjiuVxXSmph4nXEHoZ"}]},
+  {t:"Космопорт", c:"film", v:[{id:"1Pw9gyk4dQcft1jOcMudLdfHZ9O6xvOn7"}]},
+  {t:"Цепь", c:"clips", v:[{id:"1jmE7bA_IsJ-sEVrjq5VuLWQOls9Tfk0U"}]}
+];
+const CATS = {all:"Все", ads:"Реклама", clips:"Клипы", film:"AI-кино", logo:"Видеологотипы"};
+
+const VK = [
+  {t:"Студия фитнеса Марии Ковалёвой", d:"Фитнес и хореография для девушек, Владимир.", cover:"1SlLhZFbcaexe45NMb-FaDcXPaq8A0GfU",
+   chips:["Шапка","Живая шапка","Аватар","Меню"], v:[
+    {n:"Как выглядит в телефоне",id:"1TkdZxLatP9tClWf2UYcsuKiuD1kB4tYK",vert:true},
+    {n:"Живая шапка",id:"1iCZU2Wo7nZaLx_E3O1Qptl8yMUROZ04I",vert:true},
+    {n:"Шапка ПК",id:"1SlLhZFbcaexe45NMb-FaDcXPaq8A0GfU",img:true},
+    {n:"Аватар",id:"1DFTrfdWnWdHBGi9cVZb-u2mQ5DCzgSpl",img:true},
+    {n:"Пробная тренировка",id:"1SZgiH-aUk2AStmu9UkSoCrKJ5LOkIuoa",img:true},
+    {n:"Запись",id:"1GhgrRl6aX4ve0-LQkVuPqwhTyyWoXSEL",img:true},
+    {n:"Отзывы",id:"1aDSW3shq7jVwAXjoIrZm6j5g_mx3WKWF",img:true},
+    {n:"Важная информация",id:"1GanrnJiUVcsUBql6NfmNTuQHPwK_Ajd3",img:true}]},
+  {t:"Гостевой дом «Герцена 1»", d:"Исторический центр Владимира: баня, мангальная зона, уютные номера.", cover:"11psmPOgQN6e49LUGukEJo-5egzZi1FN3",
+   chips:["Шапка","Живая шапка","Аватар","Меню"], v:[
+    {n:"Как выглядит в телефоне",id:"1saqhKQyNU5RRoT1wpOtw4-rYgsYzdRcz",vert:true},
+    {n:"Живая шапка",id:"12hrObKZHuxzDwG4BJIrFx6aU1BNutVJV",vert:true},
+    {n:"Шапка ПК",id:"11psmPOgQN6e49LUGukEJo-5egzZi1FN3",img:true},
+    {n:"Аватар",id:"1laaF2WtUCR9ldR-ozkWIWMNUOTUm_-TU",img:true},
+    {n:"О нас",id:"1bF3myDfkRuUrhgC1gBjkIVDON2_8ex9w",img:true},
+    {n:"Цены",id:"1fjDV0U8W9_zwzaFD76UM9aSK5CISgs06",img:true},
+    {n:"Где находимся",id:"1pMM-GZOPAK2CDdLYQ2MUo1mgOztEggsg",img:true},
+    {n:"Связаться",id:"1iWD6EN6y5LglPOufV3wWtMvKNG9T7pXg",img:true}]},
+  {t:"ДКП · агентство недвижимости", d:"Сопровождение сделок от первого вопроса до ключей.", cover:"1yWrXb3BL-XDO8tVpXoHcFVcsf73ez5P6",
+   chips:["Шапка","Видео","Аватар","Обложки"], v:[
+    {n:"Как выглядит в телефоне",id:"1zOCV80SW68I6miQtlvo2LCL8NkMFtn7D",vert:true},
+    {n:"Видео 1",id:"1eH3js93BLgHBzQbDuHH4y5JwsnG9XVsI"},
+    {n:"Видео 2",id:"14B0AkiNkOjHqzkgZ5LreeFuiy0giEg8d"},
+    {n:"Шапка",id:"1yWrXb3BL-XDO8tVpXoHcFVcsf73ez5P6",img:true},
+    {n:"Аватар",id:"1dL1qLbyZNyutIcE8RM9tOP_UXc4CWtcK",img:true},
+    {n:"Обложка 1",id:"1IP1vLIRVsRgy9Gqzlfm1bfnXN1y-jGFT",img:true},
+    {n:"Обложка 2",id:"1Vf4bM3JUAIP5rYyeVAw4b2jXiDM_VeBr",img:true},
+    {n:"Обложка 3",id:"1y0m527lRamDF8ftzy5vTzZN8zfiRmSP1",img:true},
+    {n:"Обложка 4",id:"1MAlJcGcGN7NzdkvMiONBnvHGLz90qVUx",img:true}]},
+  {t:"Люди 21", cover:"1GBVc7M7XofQniHw3qk_uh8IKreXe9k38",
+   chips:["Обложки","Видео"], v:[
+    {n:"Как выглядит в телефоне",id:"1jqa1s3TY-4Ngc5cm3bRABfXlnq6oJHdh",vert:true},
+    {n:"ЭКО",id:"12708qjmaRhyMvRw4nnxocv7m3AxSS6t3"},
+    {n:"Видео",id:"1xett-4WbJAeqjY2yKwq8tZUoo1_bBqHX"},
+    {n:"Визуал 1",id:"1GBVc7M7XofQniHw3qk_uh8IKreXe9k38",img:true},
+    {n:"Визуал 2",id:"1wfqeylZS8JW3ZD6GwBUg8JRYoiFI6Z4T",img:true},
+    {n:"Визуал 3",id:"1v2dylNk2eEWQhG_MN-9mPtNoSGjxwcv8",img:true},
+    {n:"Визуал 4",id:"17R8QLvAd5PPp7aOYeldcfswQanimk-t3",img:true},
+    {n:"Визуал 5",id:"1TePx8_7_-q83tyKTGXThxFy2L_TqrLW8",img:true},
+    {n:"Визуал 6",id:"1Q_yD0denMDlmbHzWvgbnlV8lgnTzVhWr",img:true},
+    {n:"Визуал 7",id:"1J0eal7gCXk3sr7lr-65yI49Tft-pXtQg",img:true}]}
+];
+
+const thumb = (id,w=1200) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+const embed = id => `https://drive.google.com/file/d/${id}/preview`;
+const view  = id => `https://drive.google.com/file/d/${id}/view`;
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const plural = n => n%10===1&&n%100!==11 ? "работа" : (n%10>=2&&n%10<=4&&(n%100<10||n%100>=20) ? "работы" : "работ");
+
+const grid = document.getElementById("grid");
+const vkgrid = document.getElementById("vkgrid");
+const filters = document.getElementById("filters");
+let current = "all";
+try { current = localStorage.getItem("hb-filter") || "all"; } catch(e) {}
+if (!CATS[current]) current = "all";
+
+function renderFilters(){
+  filters.innerHTML = Object.entries(CATS).map(([k,label]) => {
+    const n = k === "all" ? WORKS.length : WORKS.filter(w => w.c === k).length;
+    return n ? `<button type="button" data-k="${k}" aria-pressed="${k===current}">${label}<span class="n">${n}</span></button>` : "";
+  }).join("");
+}
+function card(w, key, opts){
+  const coverId = w.cover || w.v[0].id;
+  const label = opts.vk ? `${w.v.length} ${plural(w.v.length)}` : `${w.v.length} ролика`;
+  return `
+    <button type="button" class="card${w.big && current==="all" && !opts.vk ? " big" : ""}" data-key="${key}">
+      <div class="thumb">
+        <div class="ph" aria-hidden="true">${esc(w.t)}</div>
+        <img src="${thumb(coverId)}" alt="" loading="lazy" onerror="this.remove()">
+        ${w.v.length > 1 ? `<span class="count">${label}</span>` : ""}
+        <span class="play" aria-hidden="true"></span>
+      </div>
+      <div class="meta"><h3>${esc(w.t)}</h3>${opts.tag ? `<span class="tag">${opts.tag}</span>` : ""}</div>
+      ${w.d ? `<p>${esc(w.d)}</p>` : ""}
+      ${w.chips ? `<div class="chips">${w.chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
+    </button>`;
+}
+function renderGrid(){
+  grid.innerHTML = WORKS.map((w,i) => ({w,i}))
+    .filter(({w}) => current === "all" || w.c === current)
+    .map(({w,i}) => card(w, "w"+i, {tag:CATS[w.c]})).join("");
+}
+function renderVK(){ vkgrid.innerHTML = VK.map((w,i) => card(w, "k"+i, {vk:true})).join(""); }
+
+filters.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  current = b.dataset.k;
+  try { localStorage.setItem("hb-filter", current); } catch(e) {}
+  renderFilters(); renderGrid();
+});
+
+const dlg = document.getElementById("player");
+const screen = document.getElementById("screen");
+const tabs = document.getElementById("pl-tabs");
+const link = document.getElementById("pl-link");
+let work = null;
+function show(k){
+  const v = work.v[k];
+  if (v.img) {
+    screen.className = "screen img";
+    screen.innerHTML = `<img src="${thumb(v.id,2000)}" alt="${esc(work.t + ' · ' + (v.n||''))}">`;
+  } else {
+    screen.className = "screen" + (v.vert ? " v" : "");
+    screen.innerHTML = `<iframe src="${embed(v.id)}" allow="autoplay; fullscreen" allowfullscreen title="${esc(work.t)}"></iframe>`;
+  }
+  link.href = view(v.id);
+  [...tabs.children].forEach((b,j) => b.setAttribute("aria-pressed", j===k));
+}
+function openWork(key){
+  work = key[0] === "w" ? WORKS[+key.slice(1)] : VK[+key.slice(1)];
+  document.getElementById("pl-title").textContent = work.t;
+  tabs.innerHTML = work.v.length > 1 ? work.v.map((v,j) => `<button type="button" data-j="${j}">${esc(v.n)}</button>`).join("") : "";
+  tabs.hidden = work.v.length < 2;
+  show(0);
+  dlg.showModal();
+}
+document.addEventListener("click", e => {
+  const c = e.target.closest(".card"); if (c) openWork(c.dataset.key);
+});
+tabs.addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(+b.dataset.j); });
+document.getElementById("close").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+dlg.addEventListener("close", () => { screen.innerHTML = ""; });
+
+renderFilters(); renderGrid(); renderVK();
+</script>
